@@ -1,0 +1,60 @@
+<div id="left">
+    <h2 class="section-title">{{ 'recipesList' | translate }}</h2>
+    <div>
+        <md-progress-spinner *ngIf="!recipes"
+                             class="progress-spinner"
+                             [color]="'primary'"
+                             [mode]="'indeterminate'">
+        </md-progress-spinner>
+        <md-list>
+            <md-list-item *ngFor="let recipe of recipes">
+                <img *ngIf="recipe.default" class="cp"
+                     (click)="seeRecipeDetails(recipe);" md-list-avatar
+                     src="assets/images/recipes/{{recipe.id}}-thumbnail.jpg">
+                <img *ngIf="!recipe.default"
+                     (click)="seeRecipeDetails(recipe);" md-list-avatar src="assets/images/recipes/default.png">
+                <h3 md-line [ngClass]="{'cp': recipe.default}" (click)="seeHRecipeDetails(recipe);"> {{recipe.name}} </h3>
+                <p md-line [ngClass]="{'cp': recipe.default}" (click)="seeRecipeDetails(recipe);">
+                    <span>{{recipe.alterEgo}}</span>
+                </p>
+                <div class="recipe-actions">
+                    {{recipe.likes}}
+                    <md-icon mdTooltip="{{(canVote ? 'canVote' : 'cannotVote') | translate}}"
+                             [mdTooltipPosition]="'above'"
+                             class="like-icon" (click)="like(recipe)">
+                        favorite
+                    </md-icon>
+                    <md-icon class="remove-icon" *ngIf="!recipe.default"
+                             (click)="remove(recipe);">
+                        delete
+                    </md-icon>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>
+<div id="right">
+    <h2 class="section-title">{{ 'createRecipe' | translate }}</h2>
+    <div>
+        <form [formGroup]="newRecipeForm" #form="ngForm" (ngSubmit)="createNewRecipe(newRecipeForm.value)">
+            <md-input-container class="input-container">
+                <input mdInput type="text"
+                       placeholder="{{'name' | translate}}"
+                       formControlName="name">
+            </md-input-container>
+
+            <md-input-container class="input-container">
+                <input mdInput type="text"
+                       placeholder="{{'realName' | translate}}"
+                       formControlName="alterEgo">
+            </md-input-container>
+
+            <button md-raised-button type="submit" [disabled]="!newRecipeForm.valid">
+                {{'create' | translate}}
+            </button>
+
+            <div *ngIf="error">{{error | translate}}</div>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>

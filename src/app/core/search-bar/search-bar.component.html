@@ -1,0 +1,12 @@
+<md-input-container>
+    <input mdInput placeholder="{{ 'findRecipe' | translate }}!"
+           [mdAutocomplete]="recipesAutocomplete" [formControl]="recipeFormControl">
+</md-input-container>
+
+<md-autocomplete #recipesAutocomplete="mdAutocomplete">
+    <md-option *ngFor="let recipe of filteredRecipes"
+               (onSelectionChange)="searchRecipe(recipe)"
+               [value]="recipe.name">
+        {{recipe.name}}
+    </md-option>
+</md-autocomplete>

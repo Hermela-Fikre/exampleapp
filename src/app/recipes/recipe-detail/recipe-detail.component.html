@@ -1,0 +1,27 @@
+<h1 class="section-title">{{'recipeDetail' | translate}}</h1>
+<md-progress-spinner *ngIf="!recipe"
+                     class="progress-spinner"
+                     [color]="'primary'"
+                     [mode]="'indeterminate'">
+</md-progress-spinner>
+<div id="recipe-detail" *ngIf="recipe">
+    <ng-container>
+        <md-card class="recipe-card">
+            <md-card-header>
+                <div md-card-avatar class="recipe-header-image"
+                     [ngStyle]="{'background-image': 'url(assets/images/recipes/' + recipe.id + '-thumbnail.jpg)'}"></div>
+                <md-card-title>{{recipe.name}}</md-card-title>
+                <md-card-subtitle>{{recipe.alterEgo}}</md-card-subtitle>
+                <div class="flex-spacer"></div>
+                <div class="recipe-actions">
+                    {{recipe.likes}}
+                    <md-icon mdTooltip="{{(canVote ? 'canVote' : 'cannotVote') | translate}}"
+                             [mdTooltipPosition]="'above'"
+                             class="like-icon" (click)="like(recipe)">favorite
+                    </md-icon>
+                </div>
+            </md-card-header>
+            <img md-card-image src="assets/images/recipes/{{recipe.id}}.jpg">
+        </md-card>
+    </ng-container>
+</div>
